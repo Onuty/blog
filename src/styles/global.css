@@ -1,0 +1,171 @@
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #ffffff;
+  --text: #111111;
+  --muted: #666666;
+  --border: #eeeeee;
+  --accent: #ffa631;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.7;
+    text-rendering: optimizeLegibility;
+  }
+
+  * {
+    box-sizing: border-box;
+    border-color: var(--border);
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #e99520;
+  }
+}
+
+@layer components {
+  .site-shell {
+    @apply mx-auto w-full max-w-5xl px-6 pb-10 sm:px-8;
+  }
+
+  .page-wrap {
+    @apply mx-auto mt-14 max-w-4xl;
+  }
+
+  .reading-wrap {
+    @apply mx-auto mt-12 max-w-prose;
+  }
+
+  .page-header {
+    @apply border-b border-border pb-8;
+  }
+
+  .page-title {
+    @apply text-4xl font-semibold tracking-tight text-text sm:text-5xl;
+  }
+
+  .post-title {
+    @apply text-4xl font-semibold leading-tight tracking-tight text-text sm:text-5xl;
+  }
+
+  .section-title {
+    @apply text-3xl font-semibold tracking-tight text-text;
+  }
+
+  .section-header {
+    @apply mb-8 flex items-center justify-between gap-4;
+  }
+
+  .section-link {
+    @apply text-sm font-medium text-accent transition-colors duration-200 hover:text-text;
+  }
+
+  .nav-link {
+    @apply text-sm text-muted transition-colors duration-200 hover:text-accent;
+  }
+
+  .title-link {
+    @apply text-text transition-colors duration-200 hover:text-accent;
+  }
+
+  .card-surface {
+    @apply rounded-lg border border-border p-6 transition-colors duration-200 hover:border-accent/40;
+  }
+
+  .article-body {
+    @apply prose prose-lg mt-10 max-w-none;
+  }
+
+  .prose {
+    --tw-prose-body: #111111;
+    --tw-prose-headings: #111111;
+    --tw-prose-links: #ffa631;
+    --tw-prose-bold: #111111;
+    --tw-prose-counters: #666666;
+    --tw-prose-bullets: #dddddd;
+    --tw-prose-hr: #eeeeee;
+    --tw-prose-quotes: #111111;
+    --tw-prose-quote-borders: #eeeeee;
+    --tw-prose-captions: #666666;
+    --tw-prose-code: #111111;
+    --tw-prose-pre-code: #111111;
+    --tw-prose-pre-bg: #fafafa;
+    --tw-prose-th-borders: #eeeeee;
+    --tw-prose-td-borders: #eeeeee;
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4 {
+    letter-spacing: -0.02em;
+  }
+
+  .prose h2 {
+    @apply mt-14 mb-4 text-3xl;
+  }
+
+  .prose h3 {
+    @apply mt-12 mb-3 text-2xl;
+  }
+
+  .prose h4 {
+    @apply mt-10 mb-2 text-xl;
+  }
+
+  .prose p,
+  .prose ul,
+  .prose ol,
+  .prose pre,
+  .prose blockquote {
+    @apply my-6;
+  }
+
+  .prose pre {
+    border: 1px solid #eeeeee;
+    border-radius: 0.75rem;
+    padding: 1.125rem;
+    overflow-x: auto;
+  }
+
+  .prose pre code {
+    font-size: 0.9rem;
+    line-height: 1.75;
+  }
+
+  .prose :where(code):not(:where(pre code)) {
+    background: #fafafa;
+    border: 1px solid #eeeeee;
+    border-radius: 0.375rem;
+    padding: 0.125rem 0.375rem;
+    font-weight: 500;
+  }
+
+  .prose img {
+    width: 100%;
+    margin: 2rem 0;
+    border: 1px solid #eeeeee;
+    border-radius: 0.75rem;
+  }
+}

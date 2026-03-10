@@ -1,0 +1,56 @@
+# Decap CMS config for /admin
+# Content is stored in this repository under src/content/blog.
+
+backend:
+  name: github
+  repo: Onuty/blog
+  branch: main
+  # If you use a custom OAuth proxy, uncomment and configure:
+  # base_url: https://your-oauth-proxy.example.com
+  # auth_endpoint: auth
+
+# Enable this when running Decap local backend tooling in development.
+local_backend: true
+
+site_url: https://onuty.net
+display_url: https://onuty.net
+logo_url: /images/blog-cover-1.svg
+
+publish_mode: simple
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  - name: blog
+    label: Blog
+    label_singular: Post
+    folder: src/content/blog
+    create: true
+    delete: true
+    extension: mdx
+    format: frontmatter
+    slug: "{{slug}}"
+    preview_path: blog/{{slug}}
+    editor:
+      preview: false
+    fields:
+      - { label: Title, name: title, widget: string }
+      -
+        label: Slug
+        name: slug
+        widget: string
+        hint: "Use lowercase kebab-case, for example: my-new-post"
+      -
+        label: Date
+        name: date
+        widget: datetime
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+      - { label: Tags, name: tags, widget: list, default: [] }
+      - { label: Description, name: description, widget: text }
+      - { label: Draft, name: draft, widget: boolean, default: false, required: false }
+      - { label: Cover, name: cover, widget: image, required: false }
+      - { label: Body, name: body, widget: markdown }
+
+

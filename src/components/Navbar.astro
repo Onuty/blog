@@ -1,0 +1,25 @@
+---
+import { NAV_ITEMS, SITE } from "@/consts";
+
+const pathname = Astro.url.pathname;
+---
+
+<nav class="flex items-center justify-between border-b border-border py-5">
+  <a href="/" class="text-lg font-semibold tracking-tight text-text transition-colors duration-200 hover:text-accent">
+    {SITE.title}
+  </a>
+
+  <ul class="flex items-center gap-6">
+    {NAV_ITEMS.map((item) => {
+      const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+
+      return (
+        <li>
+          <a href={item.href} class:list={["nav-link", isActive && "text-accent"]}>
+            {item.label}
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</nav>

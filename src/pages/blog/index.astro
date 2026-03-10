@@ -1,0 +1,30 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PostListItem from "@/components/PostListItem.astro";
+import { getPublishedBlogPosts } from "@/lib/blog";
+
+const posts = await getPublishedBlogPosts();
+---
+
+<BaseLayout title="Blog" description="Articles on programming, technology, game development, and notes.">
+  <section class="reading-wrap">
+    <header class="page-header">
+      <h1 class="page-title">Blog</h1>
+      <p class="mt-4 text-muted">
+        Writing about programming, computer technology, game development, and personal projects.
+      </p>
+    </header>
+
+    <div class="mt-10 divide-y divide-border border-y border-border">
+      {posts.map((post) => (
+        <PostListItem
+          title={post.data.title}
+          description={post.data.description}
+          date={post.data.date}
+          tags={post.data.tags}
+          href={`/blog/${post.slug}`}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

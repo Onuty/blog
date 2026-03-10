@@ -1,0 +1,28 @@
+---
+import { formatDate } from "@/consts";
+import Tag from "@/components/Tag.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  tags: string[];
+  href: string;
+}
+
+const { title, description, date, tags, href } = Astro.props;
+---
+
+<article class="py-8 first:pt-0 last:pb-0">
+  <p class="text-sm text-muted">{formatDate(date)}</p>
+  <h2 class="mt-2 text-3xl font-semibold tracking-tight text-text">
+    <a href={href} class="title-link">{title}</a>
+  </h2>
+  <p class="mt-3 text-muted">{description}</p>
+
+  {tags.length > 0 && (
+    <div class="mt-5 flex flex-wrap gap-2">
+      {tags.map((tag) => <Tag label={tag} />)}
+    </div>
+  )}
+</article>

@@ -1,0 +1,18 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import { FEATURED_PROJECTS } from "@/consts";
+---
+
+<BaseLayout title="Projects" description="A selection of tools, prototypes, and experiments.">
+  <section class="page-wrap">
+    <header class="page-header">
+      <h1 class="page-title">Projects</h1>
+      <p class="mt-4 text-muted">Things I am building across software, games, and tooling.</p>
+    </header>
+
+    <div class="mt-10 grid gap-5 md:grid-cols-2">
+      {FEATURED_PROJECTS.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+</BaseLayout>

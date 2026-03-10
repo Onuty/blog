@@ -1,0 +1,62 @@
+---
+import { render } from "astro:content";
+import PostLayout from "@/layouts/PostLayout.astro";
+import { getPublishedBlogPosts, type BlogPost } from "@/lib/blog";
+
+type AdjacentPost = {
+  title: string;
+  slug: string;
+  date: Date;
+};
+
+interface Props {
+  post: BlogPost;
+  newerPost?: AdjacentPost;
+  olderPost?: AdjacentPost;
+}
+
+export async function getStaticPaths() {
+  const posts = await getPublishedBlogPosts();
+
+  return posts.map((post, index) => {
+    const newerPost =
+      index > 0
+        ? {
+            title: posts[index - 1].data.title,
+            slug: posts[index - 1].slug,
+            date: posts[index - 1].data.date
+          }
+        : undefined;
+
+    const olderPost =
+      index < posts.length - 1
+        ? {
+            title: posts[index + 1].data.title,
+            slug: posts[index + 1].slug,
+            date: posts[index + 1].data.date
+          }
+        : undefined;
+
+    return {
+      params: { slug: post.slug },
+      props: { post, newerPost, olderPost }
+    };
+  });
+}
+
+const { post, newerPost, olderPost } = Astro.props as Props;
+const { Content, headings } = await render(post);
+---
+
+<PostLayout
+  title={post.data.title}
+  description={post.data.description}
+  date={post.data.date}
+  tags={post.data.tags}
+  cover={post.data.cover}
+  headings={headings}
+  newerPost={newerPost}
+  olderPost={olderPost}
+>
+  <Content />
+</PostLayout>

@@ -1,0 +1,31 @@
+---
+title: Building This Astro Blog
+slug: building-this-astro-blog
+date: 2026-03-09
+tags: [astro, tailwind, cms]
+description: Notes about building a static-first blog with Astro and Decap CMS.
+draft: false
+cover: /images/blog-cover-1.svg
+---
+
+I wanted this blog to feel fast and focused, so I moved from a traditional dynamic stack to **Astro + MDX + Content Collections**.
+
+## Why this stack
+
+- Static-first output for speed and reliability
+- Git-backed content for transparent revision history
+- Lightweight admin workflow through Decap CMS at `/admin`
+- Discussion powered by giscus without ad-heavy scripts
+
+## Publishing flow
+
+1. Draft or edit from the CMS dashboard.
+2. Save content as MDX files in the repo.
+3. Deploy automatically through Cloudflare Pages.
+
+```ts
+const publishingFlow = ["Decap CMS", "Git commit", "Cloudflare Pages build"];
+```
+
+That workflow keeps the writing process simple while preserving full ownership of content.
+

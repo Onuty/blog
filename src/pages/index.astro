@@ -1,0 +1,44 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import PostCard from "@/components/PostCard.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import { FEATURED_PROJECTS } from "@/consts";
+import { getPublishedBlogPosts } from "@/lib/blog";
+
+const latestPosts = (await getPublishedBlogPosts()).slice(0, 3);
+---
+
+<BaseLayout>
+  <Hero />
+
+  <section class="mt-16">
+    <div class="section-header">
+      <h2 class="section-title">Latest Articles</h2>
+      <a href="/blog" class="section-link">View all</a>
+    </div>
+
+    <div class="grid gap-5">
+      {latestPosts.map((post) => (
+        <PostCard
+          title={post.data.title}
+          description={post.data.description}
+          date={post.data.date}
+          tags={post.data.tags}
+          href={`/blog/${post.slug}`}
+        />
+      ))}
+    </div>
+  </section>
+
+  <section class="mt-20">
+    <div class="section-header">
+      <h2 class="section-title">Featured Projects</h2>
+      <a href="/projects" class="section-link">View all</a>
+    </div>
+
+    <div class="grid gap-5 md:grid-cols-2">
+      {FEATURED_PROJECTS.slice(0, 2).map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+</BaseLayout>
