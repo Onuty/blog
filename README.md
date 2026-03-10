@@ -20,7 +20,7 @@ npm run dev
 ```
 
 Site: `http://localhost:4321`
-Admin: `http://localhost:4321/admin`
+Admin: `http://localhost:4321/admin/`
 
 ## Content model
 
@@ -36,7 +36,9 @@ date: 2026-03-09
 tags: [astro, blog]
 description: Example article
 draft: false
-cover: /images/example.jpg
+featured: false
+pinned: false
+cover: /uploads/example.jpg
 ---
 ```
 
@@ -57,8 +59,9 @@ The CMS config is in `public/admin/config.yml`.
 - `PUBLIC_GISCUS_REPO_ID`
 - `PUBLIC_GISCUS_CATEGORY`
 - `PUBLIC_GISCUS_CATEGORY_ID`
+- `PUBLIC_GISCUS_MAPPING`
 
-Comments are rendered at the bottom of each blog post.
+Comments are rendered only on blog article pages.
 
 ## Build
 
@@ -66,5 +69,34 @@ Comments are rendered at the bottom of each blog post.
 npm run build
 ```
 
-The output goes to `dist/` and is ready for Cloudflare Pages.
+Output directory: `dist/`
 
+## Cloudflare Pages Deployment Notes
+
+- Framework preset: `Astro`
+- Build command: `npm run build`
+- Build output directory: `dist`
+- Node version: `20` (recommended)
+
+### Environment variables
+
+Set these in Cloudflare Pages if used:
+
+- `SITE_URL=https://onuty.net` (used for canonical URLs and sitemap site base)
+- `PUBLIC_GISCUS_REPO`
+- `PUBLIC_GISCUS_REPO_ID`
+- `PUBLIC_GISCUS_CATEGORY`
+- `PUBLIC_GISCUS_CATEGORY_ID`
+- `PUBLIC_GISCUS_MAPPING`
+- `PUBLIC_GISCUS_STRICT`
+- `PUBLIC_GISCUS_REACTIONS_ENABLED`
+- `PUBLIC_GISCUS_EMIT_METADATA`
+- `PUBLIC_GISCUS_INPUT_POSITION`
+- `PUBLIC_GISCUS_THEME`
+- `PUBLIC_GISCUS_LANG`
+
+### Path and admin notes
+
+- Decap admin is served from `/admin/`.
+- `public/_redirects` includes `/admin -> /admin/` to avoid config path issues.
+- Static assets from `public/` (including `public/admin/*`, `public/uploads/*`) are copied to `dist/` automatically.

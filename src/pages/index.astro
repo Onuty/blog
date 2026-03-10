@@ -6,13 +6,38 @@ import ProjectCard from "@/components/ProjectCard.astro";
 import { FEATURED_PROJECTS } from "@/consts";
 import { getPublishedBlogPosts } from "@/lib/blog";
 
-const latestPosts = (await getPublishedBlogPosts()).slice(0, 3);
+const publishedPosts = await getPublishedBlogPosts();
+const featuredPosts = publishedPosts.filter((post) => post.data.featured).slice(0, 2);
+const latestNonFeaturedPosts = publishedPosts.filter((post) => !post.data.featured).slice(0, 3);
+const latestPosts = latestNonFeaturedPosts.length > 0 ? latestNonFeaturedPosts : publishedPosts.slice(0, 3);
 ---
 
 <BaseLayout>
   <Hero />
 
-  <section class="mt-16">
+  {featuredPosts.length > 0 && (
+    <section class="mt-16">
+      <div class="section-header">
+        <h2 class="section-title">Featured Articles</h2>
+        <a href="/blog" class="section-link">View all</a>
+      </div>
+
+      <div class="grid gap-5">
+        {featuredPosts.map((post) => (
+          <PostCard
+            title={post.data.title}
+            description={post.data.description}
+            date={post.data.date}
+            tags={post.data.tags}
+            cover={post.data.cover}
+            href={`/blog/${post.slug}`}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class={featuredPosts.length > 0 ? "mt-20" : "mt-16"}>
     <div class="section-header">
       <h2 class="section-title">Latest Articles</h2>
       <a href="/blog" class="section-link">View all</a>
@@ -25,6 +50,7 @@ const latestPosts = (await getPublishedBlogPosts()).slice(0, 3);
           description={post.data.description}
           date={post.data.date}
           tags={post.data.tags}
+          cover={post.data.cover}
           href={`/blog/${post.slug}`}
         />
       ))}

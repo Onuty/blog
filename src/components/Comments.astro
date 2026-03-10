@@ -4,7 +4,7 @@ import { GISCUS } from "@/consts";
 const enabled = Boolean(GISCUS.repo && GISCUS.repoId && GISCUS.category && GISCUS.categoryId);
 ---
 
-<section class="mt-16 border-t border-border pt-10">
+<section class="mt-14 border-t border-border pt-10" aria-label="Comments">
   <h2 class="text-2xl font-semibold tracking-tight text-text">Comments</h2>
 
   {enabled ? (
@@ -17,19 +17,18 @@ const enabled = Boolean(GISCUS.repo && GISCUS.repoId && GISCUS.category && GISCU
         data-category-id={GISCUS.categoryId}
         data-mapping={GISCUS.mapping}
         data-strict={GISCUS.strict}
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="top"
-        data-theme="light"
-        data-lang="en"
+        data-reactions-enabled={GISCUS.reactionsEnabled}
+        data-emit-metadata={GISCUS.emitMetadata}
+        data-input-position={GISCUS.inputPosition}
+        data-theme={GISCUS.theme}
+        data-lang={GISCUS.lang}
         crossorigin="anonymous"
         async
       ></script>
     </div>
   ) : (
     <p class="mt-4 text-sm text-muted">
-      Configure giscus environment variables to enable comments.
+      Giscus is not configured yet. Add giscus values in your environment variables to enable comments.
     </p>
   )}
 </section>
-

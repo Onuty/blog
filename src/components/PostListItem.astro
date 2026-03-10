@@ -8,21 +8,38 @@ interface Props {
   date: Date;
   tags: string[];
   href: string;
+  cover?: string;
 }
 
-const { title, description, date, tags, href } = Astro.props;
+const { title, description, date, tags, href, cover } = Astro.props;
 ---
 
 <article class="py-8 first:pt-0 last:pb-0">
-  <p class="text-sm text-muted">{formatDate(date)}</p>
-  <h2 class="mt-2 text-3xl font-semibold tracking-tight text-text">
-    <a href={href} class="title-link">{title}</a>
-  </h2>
-  <p class="mt-3 text-muted">{description}</p>
+  <div class:list={["grid gap-5", cover && "md:grid-cols-[1fr_220px] md:items-start"]}>
+    <div>
+      <p class="text-sm text-muted">{formatDate(date)}</p>
+      <h2 class="mt-2 text-3xl font-semibold tracking-tight text-text">
+        <a href={href} class="title-link">{title}</a>
+      </h2>
+      <p class="mt-3 text-muted">{description}</p>
 
-  {tags.length > 0 && (
-    <div class="mt-5 flex flex-wrap gap-2">
-      {tags.map((tag) => <Tag label={tag} />)}
+      {tags.length > 0 && (
+        <div class="mt-5 flex flex-wrap gap-2">
+          {tags.map((tag) => <Tag label={tag} />)}
+        </div>
+      )}
     </div>
-  )}
+
+    {cover && (
+      <a href={href} class="block overflow-hidden rounded-lg border border-border bg-[#fafafa]">
+        <img
+          src={cover}
+          alt={title}
+          loading="lazy"
+          decoding="async"
+          class="aspect-[4/3] w-full object-cover"
+        />
+      </a>
+    )}
+  </div>
 </article>

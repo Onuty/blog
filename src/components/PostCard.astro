@@ -8,12 +8,25 @@ interface Props {
   date: Date;
   tags: string[];
   href: string;
+  cover?: string;
 }
 
-const { title, description, date, tags, href } = Astro.props;
+const { title, description, date, tags, href, cover } = Astro.props;
 ---
 
 <article class="card-surface">
+  {cover && (
+    <a href={href} class="mb-5 block overflow-hidden rounded-lg border border-border bg-[#fafafa]">
+      <img
+        src={cover}
+        alt={title}
+        loading="lazy"
+        decoding="async"
+        class="aspect-[16/9] w-full object-cover"
+      />
+    </a>
+  )}
+
   <p class="text-sm text-muted">{formatDate(date)}</p>
   <h3 class="mt-3 text-2xl font-semibold tracking-tight text-text">
     <a href={href} class="title-link">{title}</a>

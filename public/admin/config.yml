@@ -29,28 +29,71 @@ collections:
     delete: true
     extension: mdx
     format: frontmatter
+    # Uses the explicit slug field for filename + route (entry.slug).
     slug: "{{slug}}"
     preview_path: blog/{{slug}}
     editor:
       preview: false
     fields:
-      - { label: Title, name: title, widget: string }
+      -
+        label: Title
+        name: title
+        widget: string
+        required: true
       -
         label: Slug
         name: slug
         widget: string
-        hint: "Use lowercase kebab-case, for example: my-new-post"
+        required: true
+        hint: "Lowercase kebab-case, e.g. my-new-post"
+        pattern:
+          - "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          - "Use lowercase kebab-case only (letters, numbers, hyphens)."
       -
         label: Date
         name: date
         widget: datetime
+        required: true
         format: "YYYY-MM-DD"
         date_format: "YYYY-MM-DD"
         time_format: false
-      - { label: Tags, name: tags, widget: list, default: [] }
-      - { label: Description, name: description, widget: text }
-      - { label: Draft, name: draft, widget: boolean, default: false, required: false }
-      - { label: Cover, name: cover, widget: image, required: false }
-      - { label: Body, name: body, widget: markdown }
-
-
+      -
+        label: Tags
+        name: tags
+        widget: list
+        required: false
+        default: []
+        hint: "Optional. Each item should be a simple tag string."
+      -
+        label: Description
+        name: description
+        widget: text
+        required: true
+      -
+        label: Draft
+        name: draft
+        widget: boolean
+        required: false
+        default: false
+      -
+        label: Featured
+        name: featured
+        widget: boolean
+        required: false
+        default: false
+      -
+        label: Pinned
+        name: pinned
+        widget: boolean
+        required: false
+        default: false
+      -
+        label: Cover
+        name: cover
+        widget: image
+        required: false
+        hint: "Optional. Upload/select an image. This is saved to public/uploads and should resolve as /uploads/filename.ext"
+      -
+        label: Body
+        name: body
+        widget: markdown

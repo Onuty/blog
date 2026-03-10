@@ -53,6 +53,10 @@ export const GISCUS = {
   category: import.meta.env.PUBLIC_GISCUS_CATEGORY ?? "",
   categoryId: import.meta.env.PUBLIC_GISCUS_CATEGORY_ID ?? "",
   mapping: import.meta.env.PUBLIC_GISCUS_MAPPING ?? "pathname",
-  strict: import.meta.env.PUBLIC_GISCUS_STRICT ?? "0"
+  strict: import.meta.env.PUBLIC_GISCUS_STRICT ?? "0",
+  reactionsEnabled: import.meta.env.PUBLIC_GISCUS_REACTIONS_ENABLED ?? "1",
+  emitMetadata: import.meta.env.PUBLIC_GISCUS_EMIT_METADATA ?? "0",
+  inputPosition: import.meta.env.PUBLIC_GISCUS_INPUT_POSITION ?? "top",
+  theme: import.meta.env.PUBLIC_GISCUS_THEME ?? "light",
+  lang: import.meta.env.PUBLIC_GISCUS_LANG ?? "en"
 };
-
