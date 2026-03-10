@@ -1,34 +1,81 @@
 ---
-import { GISCUS } from "@/consts";
+const giscusConfig = {
+  repo: import.meta.env.PUBLIC_GISCUS_REPO ?? "",
+  repoId: import.meta.env.PUBLIC_GISCUS_REPO_ID ?? "",
+  category: import.meta.env.PUBLIC_GISCUS_CATEGORY ?? "",
+  categoryId: import.meta.env.PUBLIC_GISCUS_CATEGORY_ID ?? "",
+  mapping: import.meta.env.PUBLIC_GISCUS_MAPPING ?? "pathname",
+  strict: import.meta.env.PUBLIC_GISCUS_STRICT ?? "0",
+  reactionsEnabled: import.meta.env.PUBLIC_GISCUS_REACTIONS_ENABLED ?? "1",
+  emitMetadata: import.meta.env.PUBLIC_GISCUS_EMIT_METADATA ?? "0",
+  inputPosition: import.meta.env.PUBLIC_GISCUS_INPUT_POSITION ?? "bottom",
+  theme: import.meta.env.PUBLIC_GISCUS_THEME ?? "light",
+  lang: import.meta.env.PUBLIC_GISCUS_LANG ?? "en"
+};
 
-const enabled = Boolean(GISCUS.repo && GISCUS.repoId && GISCUS.category && GISCUS.categoryId);
+const requiredKeys = ["repo", "repoId", "category", "categoryId"] as const;
+const missingKeys = requiredKeys.filter((key) => !giscusConfig[key]);
+const isConfigured = missingKeys.length === 0;
+const isDev = import.meta.env.DEV;
 ---
 
 <section class="mt-14 border-t border-border pt-10" aria-label="Comments">
   <h2 class="text-2xl font-semibold tracking-tight text-text">Comments</h2>
 
-  {enabled ? (
-    <div class="mt-6">
-      <script
-        src="https://giscus.app/client.js"
-        data-repo={GISCUS.repo}
-        data-repo-id={GISCUS.repoId}
-        data-category={GISCUS.category}
-        data-category-id={GISCUS.categoryId}
-        data-mapping={GISCUS.mapping}
-        data-strict={GISCUS.strict}
-        data-reactions-enabled={GISCUS.reactionsEnabled}
-        data-emit-metadata={GISCUS.emitMetadata}
-        data-input-position={GISCUS.inputPosition}
-        data-theme={GISCUS.theme}
-        data-lang={GISCUS.lang}
-        crossorigin="anonymous"
-        async
-      ></script>
-    </div>
-  ) : (
+  <div id="giscus-container" class="mt-6"></div>
+
+  {!isConfigured && (
     <p class="mt-4 text-sm text-muted">
       Giscus is not configured yet. Add giscus values in your environment variables to enable comments.
     </p>
   )}
+
+  <script is:inline>
+    const giscusConfig = {
+      repo: {JSON.stringify(giscusConfig.repo)},
+      repoId: {JSON.stringify(giscusConfig.repoId)},
+      category: {JSON.stringify(giscusConfig.category)},
+      categoryId: {JSON.stringify(giscusConfig.categoryId)},
+      mapping: {JSON.stringify(giscusConfig.mapping)},
+      strict: {JSON.stringify(giscusConfig.strict)},
+      reactionsEnabled: {JSON.stringify(giscusConfig.reactionsEnabled)},
+      emitMetadata: {JSON.stringify(giscusConfig.emitMetadata)},
+      inputPosition: {JSON.stringify(giscusConfig.inputPosition)},
+      theme: {JSON.stringify(giscusConfig.theme)},
+      lang: {JSON.stringify(giscusConfig.lang)}
+    };
+
+    const isDev = {isDev ? "true" : "false"};
+    const requiredKeys = ["repo", "repoId", "category", "categoryId"];
+    const missing = requiredKeys.filter((key) => !giscusConfig[key]);
+
+    if (missing.length > 0) {
+      if (isDev) {
+        console.warn("[giscus] Missing required config:", missing);
+      }
+    } else {
+      const container = document.getElementById("giscus-container");
+
+      if (container && !container.hasChildNodes()) {
+        const script = document.createElement("script");
+        script.src = "https://giscus.app/client.js";
+
+        script.setAttribute("data-repo", giscusConfig.repo);
+        script.setAttribute("data-repo-id", giscusConfig.repoId);
+        script.setAttribute("data-category", giscusConfig.category);
+        script.setAttribute("data-category-id", giscusConfig.categoryId);
+        script.setAttribute("data-mapping", giscusConfig.mapping || "pathname");
+        script.setAttribute("data-strict", giscusConfig.strict || "0");
+        script.setAttribute("data-reactions-enabled", giscusConfig.reactionsEnabled || "1");
+        script.setAttribute("data-emit-metadata", giscusConfig.emitMetadata || "0");
+        script.setAttribute("data-input-position", giscusConfig.inputPosition || "bottom");
+        script.setAttribute("data-theme", giscusConfig.theme || "light");
+        script.setAttribute("data-lang", giscusConfig.lang || "en");
+        script.setAttribute("crossorigin", "anonymous");
+        script.async = true;
+
+        container.appendChild(script);
+      }
+    }
+  </script>
 </section>

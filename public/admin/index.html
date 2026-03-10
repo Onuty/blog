@@ -6,8 +6,9 @@
     <title>Onuty Admin</title>
     <base href="/admin/" />
     <script>
+      // Keep /admin and /admin/ consistent so Decap resolves /admin/config.yml.
       if (window.location.pathname === "/admin") {
-        window.location.replace("/admin/");
+        window.location.replace("/admin/" + window.location.hash);
       }
     </script>
   </head>

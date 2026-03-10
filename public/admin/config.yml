@@ -5,15 +5,21 @@ backend:
   name: github
   repo: Onuty/blog
   branch: main
-  # If you use a custom OAuth proxy, uncomment and configure:
-  # base_url: https://your-oauth-proxy.example.com
-  # auth_endpoint: auth
+  # Cloudflare deployment note:
+  # Decap falls back to Netlify auth if base_url/auth_endpoint are not set.
+  # Use a GitHub OAuth proxy you control (for example, a Cloudflare Worker endpoint).
+  # The values below assume an auth endpoint at:
+  #   https://blog.onuty.net/api/auth
+  # Replace these if your OAuth proxy lives elsewhere.
+  base_url: https://blog.onuty.net
+  auth_endpoint: api/auth
 
 # Enable this when running Decap local backend tooling in development.
+# This supports local admin workflows without production OAuth.
 local_backend: true
 
-site_url: https://onuty.net
-display_url: https://onuty.net
+site_url: https://blog.onuty.net
+display_url: https://blog.onuty.net
 logo_url: /images/blog-cover-1.svg
 
 publish_mode: simple
