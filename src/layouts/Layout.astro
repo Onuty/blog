@@ -51,7 +51,9 @@ let pageTitle: string;
 if (title) {
 	pageTitle = `${title} - ${siteConfig.title}`;
 } else {
-	pageTitle = `${siteConfig.title} - ${siteConfig.subtitle}`;
+	pageTitle = siteConfig.subtitle
+		? `${siteConfig.title} - ${siteConfig.subtitle}`
+		: siteConfig.title;
 }
 
 const favicons: Favicon[] =
@@ -211,6 +213,7 @@ import {
 	MAIN_PANEL_OVERLAPS_BANNER_HEIGHT
 } from "../constants/constants";
 import { siteConfig } from '../config';
+import { applyStoredLanguageToDocument } from "../i18n";
 
 /* Preload fonts */
 // (async function() {
@@ -273,6 +276,7 @@ function setClickOutsideToClose(panel: string, ignores: string[]) {
 	});
 }
 setClickOutsideToClose("display-setting", ["display-setting", "display-settings-switch"])
+setClickOutsideToClose("language-panel", ["language-panel", "language-switch"])
 setClickOutsideToClose("nav-menu-panel", ["nav-menu-panel", "nav-menu-switch"])
 setClickOutsideToClose("search-panel", ["search-panel", "search-bar", "search-switch"])
 
@@ -367,6 +371,7 @@ function init() {
 	// disableAnimation()()		// TODO
 	loadTheme();
 	loadHue();
+	applyStoredLanguageToDocument();
 	initCustomScrollbar();
 	showBanner();
 }
@@ -404,7 +409,10 @@ const setup = () => {
 			navbar.classList.add('navbar-hidden')
 		}
 	})
-	window.swup.hooks.on('content:replace', initCustomScrollbar)
+	window.swup.hooks.on('content:replace', () => {
+		applyStoredLanguageToDocument();
+		initCustomScrollbar();
+	})
 	window.swup.hooks.on('visit:start', (visit: {to: {url: string}}) => {
 		// change banner height immediately when a link is clicked
 		const bodyElement = document.querySelector('body')
@@ -427,6 +435,8 @@ const setup = () => {
 		}
 	});
 	window.swup.hooks.on('page:view', () => {
+		applyStoredLanguageToDocument();
+
 		// hide the temp high element when the transition is done
 		const heightExtend = document.getElementById('page-height-extend')
 		if (heightExtend) {

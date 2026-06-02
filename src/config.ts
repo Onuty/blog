@@ -8,9 +8,9 @@ import type {
 import { LinkPreset } from "./types/config";
 
 export const siteConfig: SiteConfig = {
-	title: "Onuty Blog",
-	subtitle: "個人筆記與文章",
-	lang: "zh_TW", // Language code, e.g. 'en', 'zh_CN', 'ja', etc.
+	title: "Onuty",
+	subtitle: "",
+	lang: "en", // Language code, e.g. 'en', 'zh_CN', 'ja', etc.
 	themeColor: {
 		hue: 250, // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
 		fixed: false, // Hide the theme color picker for visitors
@@ -50,12 +50,17 @@ export const navBarConfig: NavBarConfig = {
 export const profileConfig: ProfileConfig = {
 	avatar: "assets/images/demo-avatar.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 	name: "Onuty",
-	bio: "個人筆記、技術文章與生活觀察。",
+	bio: "",
 	links: [
 		{
-			name: "Website",
-			icon: "fa6-solid:globe", // Visit https://icones.js.org/ for icon codes
-			url: "https://blog.onuty.net/",
+			name: "Steam",
+			icon: "fa6-brands:steam",
+			url: "https://steamcommunity.com/profiles/76561198835004824/",
+		},
+		{
+			name: "GitHub",
+			icon: "fa6-brands:github",
+			url: "https://github.com/Onuty",
 		},
 	],
 };

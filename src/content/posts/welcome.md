@@ -1,14 +1,14 @@
 ---
-title: 歡迎來到 Onuty Blog
+title: Welcome to Onuty
 published: 2026-06-02
-description: '這是 Onuty Blog 的第一篇示例文章。'
+description: 'The first sample post on Onuty.'
 image: ''
 tags: [Blog, Fuwari]
-category: '日誌'
+category: 'Journal'
 draft: false 
-lang: 'zh_TW'
+lang: 'en'
 ---
 
-這是使用 Fuwari 模板建立的個人博客。
+This is a personal blog built with the Fuwari template.
 
-之後可以在這裡整理技術筆記、生活觀察，以及任何值得留下來慢慢看的內容。
+I will use this space for technical notes, personal writing, and anything worth keeping around.

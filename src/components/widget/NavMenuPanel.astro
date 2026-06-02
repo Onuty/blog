@@ -1,10 +1,11 @@
 ---
 import { Icon } from "astro-icon/components";
+import type I18nKey from "../../i18n/i18nKey";
 import { type NavBarLink } from "../../types/config";
 import { url } from "../../utils/url-utils";
 
 interface Props {
-	links: NavBarLink[];
+	links: (NavBarLink & { i18nKey?: I18nKey })[];
 }
 
 const links = Astro.props.links;
@@ -16,7 +17,7 @@ const links = Astro.props.links;
         "
            target={link.external ? "_blank" : null}
         >
-            <div class="transition text-black/75 dark:text-white/75 font-bold group-hover:text-[var(--primary)] group-active:text-[var(--primary)]">
+            <div data-i18n={link.i18nKey} class="transition text-black/75 dark:text-white/75 font-bold group-hover:text-[var(--primary)] group-active:text-[var(--primary)]">
                 {link.name}
             </div>
             {!link.external && <Icon name="material-symbols:chevron-right-rounded"
