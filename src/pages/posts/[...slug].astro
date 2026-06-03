@@ -79,7 +79,7 @@ const jsonLd = {
                     md:before:w-1 before:h-5 before:rounded-md before:bg-[var(--primary)]
                     before:absolute before:top-[0.75rem] before:left-[-1.125rem]
                 ">
-                    {entry.data.title}
+                    <span data-i18n-post={entry.slug} data-i18n-post-field="title">{entry.data.title}</span>
                 </div>
             </div>
 
@@ -102,9 +102,11 @@ const jsonLd = {
             }
 
 
-            <Markdown class="mb-6 markdown-content onload-animation">
-                <Content />
-            </Markdown>
+            <div data-i18n-post-body={entry.slug}>
+                <Markdown class="mb-6 markdown-content onload-animation">
+                    <Content />
+                </Markdown>
+            </div>
 
             {licenseConfig.enable && <License title={entry.data.title} slug={entry.slug} pubDate={entry.data.published} class="mb-6 rounded-xl license-container onload-animation"></License>}
 

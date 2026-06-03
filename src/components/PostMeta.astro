@@ -56,7 +56,9 @@ const className = Astro.props.class;
             <a href={getCategoryUrl(category)} aria-label={`View all posts in the ${category} category`}
                class="link-lg transition text-50 text-sm font-medium
                             hover:text-[var(--primary)] dark:hover:text-[var(--primary)] whitespace-nowrap">
-                {category || <span data-i18n={I18nKey.uncategorized}>{i18n(I18nKey.uncategorized)}</span>}
+                {category
+                    ? <span data-i18n-taxonomy={category}>{category}</span>
+                    : <span data-i18n={I18nKey.uncategorized}>{i18n(I18nKey.uncategorized)}</span>}
             </a>
         </div>
     </div>
@@ -73,7 +75,7 @@ const className = Astro.props.class;
                 <a href={getTagUrl(tag)} aria-label={`View all posts with the ${tag.trim()} tag`}
                    class="link-lg transition text-50 text-sm font-medium
                                 hover:text-[var(--primary)] dark:hover:text-[var(--primary)] whitespace-nowrap">
-                    {tag.trim()}
+                    <span data-i18n-taxonomy={tag.trim()}>{tag.trim()}</span>
                 </a>
             ))}
             {!(tags && tags.length > 0) && <div data-i18n={I18nKey.noTags} class="transition text-50 text-sm font-medium">{i18n(I18nKey.noTags)}</div>}

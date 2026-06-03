@@ -19,15 +19,18 @@ const navI18nKeyMap: Record<LinkPreset, I18nKey> = {
 	[LinkPreset.About]: I18nKey.about,
 };
 
-let links: (NavBarLink & { i18nKey?: I18nKey })[] = navBarConfig.links.map(
-	(item: NavBarLink | LinkPreset): NavBarLink & { i18nKey?: I18nKey } => {
+let links: (NavBarLink & { i18nKey?: I18nKey; i18nCustomKey?: string })[] = navBarConfig.links.map(
+	(item: NavBarLink | LinkPreset): NavBarLink & { i18nKey?: I18nKey; i18nCustomKey?: string } => {
 		if (typeof item === "number") {
 			return {
 				...LinkPresets[item],
 				i18nKey: navI18nKeyMap[item],
 			};
 		}
-		return item;
+		return {
+			...item,
+			i18nCustomKey: item.url === "/friends/" ? "friends" : undefined,
+		};
 	},
 );
 ---
@@ -44,11 +47,11 @@ let links: (NavBarLink & { i18nKey?: I18nKey })[] = navBarConfig.links.map(
         </a>
         <div class="hidden md:flex">
             {links.map((l) => {
-                return <a aria-label={l.name} data-i18n-aria-label={l.i18nKey} href={l.external ? l.url : url(l.url)} target={l.external ? "_blank" : null}
+                return <a aria-label={l.name} data-i18n-aria-label={l.i18nKey} data-i18n-custom-aria-label={l.i18nCustomKey} href={l.external ? l.url : url(l.url)} target={l.external ? "_blank" : null}
                           class="btn-plain scale-animation rounded-lg h-11 font-bold px-5 active:scale-95"
                 >
                     <div class="flex items-center">
-                        <span data-i18n={l.i18nKey}>{l.name}</span>
+                        <span data-i18n={l.i18nKey} data-i18n-custom={l.i18nCustomKey}>{l.name}</span>
                         {l.external && <Icon name="fa6-solid:arrow-up-right-from-square" class="text-[0.875rem] transition -translate-y-[1px] ml-1 text-black/[0.2] dark:text-white/[0.2]"></Icon>}
                     </div>
                 </a>;

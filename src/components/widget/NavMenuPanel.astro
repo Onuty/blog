@@ -5,7 +5,7 @@ import { type NavBarLink } from "../../types/config";
 import { url } from "../../utils/url-utils";
 
 interface Props {
-	links: (NavBarLink & { i18nKey?: I18nKey })[];
+	links: (NavBarLink & { i18nKey?: I18nKey; i18nCustomKey?: string })[];
 }
 
 const links = Astro.props.links;
@@ -17,7 +17,7 @@ const links = Astro.props.links;
         "
            target={link.external ? "_blank" : null}
         >
-            <div data-i18n={link.i18nKey} class="transition text-black/75 dark:text-white/75 font-bold group-hover:text-[var(--primary)] group-active:text-[var(--primary)]">
+            <div data-i18n={link.i18nKey} data-i18n-custom={link.i18nCustomKey} class="transition text-black/75 dark:text-white/75 font-bold group-hover:text-[var(--primary)] group-active:text-[var(--primary)]">
                 {link.name}
             </div>
             {!link.external && <Icon name="material-symbols:chevron-right-rounded"

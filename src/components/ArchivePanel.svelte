@@ -3,7 +3,13 @@ import { onMount } from "svelte";
 
 import I18nKey from "../i18n/i18nKey";
 import { getPostUrlBySlug } from "../utils/url-utils";
-import { currentLanguage, translate } from "@/i18n";
+import {
+	currentLanguage,
+	translate,
+	translatePost,
+	translateTaxonomy,
+	type LanguageCode,
+} from "@/i18n";
 
 export let tags: string[];
 export let categories: string[];
@@ -37,8 +43,8 @@ function formatDate(date: Date) {
 	return `${month}-${day}`;
 }
 
-function formatTag(tagList: string[]) {
-	return tagList.map((t) => `#${t}`).join(" ");
+function formatTag(tagList: string[], language: LanguageCode) {
+	return tagList.map((t) => `#${translateTaxonomy(t, language)}`).join(" ");
 }
 
 onMount(async () => {
@@ -133,7 +139,7 @@ onMount(async () => {
                      group-hover:translate-x-1 transition-all group-hover:text-[var(--primary)]
                      text-75 pr-8 whitespace-nowrap overflow-ellipsis overflow-hidden"
                         >
-                            {post.data.title}
+                            {translatePost(post.slug, "title", $currentLanguage) || post.data.title}
                         </div>
 
                         <!-- tag list -->
@@ -141,7 +147,7 @@ onMount(async () => {
                                 class="hidden md:block md:w-[15%] text-left text-sm transition
                      whitespace-nowrap overflow-ellipsis overflow-hidden text-30"
                         >
-                            {formatTag(post.data.tags)}
+                            {formatTag(post.data.tags, $currentLanguage)}
                         </div>
                     </div>
                 </a>

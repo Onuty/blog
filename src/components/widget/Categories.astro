@@ -32,7 +32,7 @@ const style = Astro.props.style;
         >
             {c.name.trim() === uncategorizedName
                 ? <span data-i18n={I18nKey.uncategorized}>{uncategorizedName}</span>
-                : c.name.trim()}
+                : <span data-i18n-taxonomy={c.name.trim()}>{c.name.trim()}</span>}
         </ButtonLink>
     )}
 </WidgetLayout>
